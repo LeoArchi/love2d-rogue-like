@@ -35,11 +35,15 @@ local Map = {
       {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
       {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
       {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+      {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+      {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+      {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+      {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
       {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
     }
 
     self.columns = 20
-    self.rows = 20
+    self.rows = 24
 
     self.cellSize = 50
 
@@ -110,6 +114,10 @@ local Map = {
 
       end
     end
+
+    -- On affiche les coordonnées de la carte
+    love.graphics.setColor(1, 0, 0, 1)
+    love.graphics.print("x:" .. math.floor(self.x) .. " y:" .. math.floor(self.y), -10, -10)
 
     -- Avant de quitter le contexte de la carte, on dessine le joueur
     Player:draw()

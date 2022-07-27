@@ -31,11 +31,11 @@ local Player = {
     end
 
     -- On "cap" la position de la map
-    if Map.x < 0 then Map.x = 0 end
-    if Map.x > Map.columns * Map.cellSize then Map.x = Map.columns * Map.cellSize end
+    --if Map.x < 0 then Map.x = 0 end
+    --if Map.x + Map.columns * Map.cellSize > love.graphics.getWidth() then Map.x = love.graphics.getWidth() - Map.columns * Map.cellSize end
 
-    if Map.y < 0 then Map.y = 0 end
-    if Map.y > Map.rows * Map.cellSize then Map.y = Map.rows * Map.cellSize end
+    --if Map.y < 0 then Map.y = 0 end
+    --if Map.y + Map.rows * Map.cellSize > love.graphics.getHeight() then Map.y = love.graphics.getHeight() - Map.rows * Map.cellSize end
 
   end,
 
