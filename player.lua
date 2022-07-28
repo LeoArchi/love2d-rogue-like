@@ -30,19 +30,39 @@ local Player = {
     -- Mouvement vertical
     if love.keyboard.isDown("z") then
       self.y = self.y - _speed
-      Camera.y = Camera.y + _speed
+
+      -- Si il reste des éléments en haut de l'écran, on scrolle
+      if self.y - self.window_y > 0 then
+        Camera.y = Camera.y + _speed
+      end
+
     elseif love.keyboard.isDown("s") then
       self.y = self.y + _speed
-      Camera.y = Camera.y - _speed
+
+      -- Si il reste des éléments en bas de l'écran, on scrolle
+      if (Map.rows * Map.cellSize) - self.y - (love.graphics.getHeight() - self.window_y) > 0 then
+        Camera.y = Camera.y - _speed
+      end
+
     end
 
     -- Mouvement horizontal
     if love.keyboard.isDown("q") then
       self.x = self.x - _speed
-      Camera.x = Camera.x + _speed
+
+      -- Si il reste des éléments à gauche de l'écran, on scrolle
+      if self.x - self.window_x > 0 then
+        Camera.x = Camera.x + _speed
+      end
+
     elseif love.keyboard.isDown("d") then
       self.x = self.x + _speed
-      Camera.x = Camera.x - _speed
+
+      -- Si il reste des éléments à droite de l'écran, on scrolle
+      if (Map.columns * Map.cellSize) - self.x - (love.graphics.getWidth() - self.window_x) > 0 then
+        Camera.x = Camera.x - _speed
+      end
+
     end
 
   end,
