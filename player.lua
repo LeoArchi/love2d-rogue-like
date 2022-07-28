@@ -5,6 +5,10 @@ local Player = {
   speed,
   fov,
 
+  -- Position à l'écran
+  window_x,
+  window_y,
+
   init = function(self, x, y)
     self.x = x or 0
     self.y = y or 0
@@ -13,29 +17,33 @@ local Player = {
   end,
 
   update = function(self, dt)
+
+    local _speed = self.speed*dt
+
+    -- On calcul le delta du joueur par rapport au centre de la carte
+    local delta_x = Map.center_x - self.x
+    local delta_y = Map.center_y - self.y
+
+    self.window_x = Camera.x - delta_x
+    self.window_y = Camera.y - delta_y
+
+    -- Mouvement vertical
     if love.keyboard.isDown("z") then
-      self.y = self.y - self.speed*dt
-      Map.y = Map.y + self.speed*dt
+      self.y = self.y - _speed
+      Camera.y = Camera.y + _speed
     elseif love.keyboard.isDown("s") then
-      self.y = self.y + self.speed*dt
-      Map.y = Map.y - self.speed*dt
+      self.y = self.y + _speed
+      Camera.y = Camera.y - _speed
     end
 
-
+    -- Mouvement horizontal
     if love.keyboard.isDown("q") then
-      self.x = self.x - self.speed*dt
-      Map.x = Map.x + self.speed*dt
+      self.x = self.x - _speed
+      Camera.x = Camera.x + _speed
     elseif love.keyboard.isDown("d") then
-      self.x = self.x + self.speed*dt
-      Map.x = Map.x - self.speed*dt
+      self.x = self.x + _speed
+      Camera.x = Camera.x - _speed
     end
-
-    -- On "cap" la position de la map
-    --if Map.x < 0 then Map.x = 0 end
-    --if Map.x + Map.columns * Map.cellSize > love.graphics.getWidth() then Map.x = love.graphics.getWidth() - Map.columns * Map.cellSize end
-
-    --if Map.y < 0 then Map.y = 0 end
-    --if Map.y + Map.rows * Map.cellSize > love.graphics.getHeight() then Map.y = love.graphics.getHeight() - Map.rows * Map.cellSize end
 
   end,
 
