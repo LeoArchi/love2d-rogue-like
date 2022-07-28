@@ -9,11 +9,31 @@ local Player = {
   window_x,
   window_y,
 
+  -- Sprite
+  spriteSheet,
+
+  -- Orientation
+  sprite,
+  player_front,
+  player_back,
+  player_left,
+  player_right,
+
   init = function(self, x, y)
     self.x = x or 0
     self.y = y or 0
-    self.speed = 100
+    self.speed = 200
     self.fov = 300
+
+    self.spriteSheet =  love.graphics.newImage("resources/textures/player.png")
+    self.spriteSheet:setFilter("nearest", "nearest")
+
+    self.player_front = love.graphics.newQuad(0, 0, 16, 16, self.spriteSheet)
+    self.player_back = love.graphics.newQuad(16, 0, 16, 16, self.spriteSheet)
+    self.player_right = love.graphics.newQuad(32, 0, 16, 16, self.spriteSheet)
+    self.player_left = love.graphics.newQuad(48, 0, 16, 16, self.spriteSheet)
+
+    self.sprite = self.player_front
   end,
 
   update = function(self, dt)
@@ -29,6 +49,9 @@ local Player = {
 
     -- Mouvement vertical
     if love.keyboard.isDown("z") then
+
+      self.sprite = self.player_back
+
       self.y = self.y - _speed
 
       -- Si il reste des éléments en haut de l'écran, on scrolle
@@ -37,6 +60,9 @@ local Player = {
       end
 
     elseif love.keyboard.isDown("s") then
+
+      self.sprite = self.player_front
+
       self.y = self.y + _speed
 
       -- Si il reste des éléments en bas de l'écran, on scrolle
@@ -48,6 +74,9 @@ local Player = {
 
     -- Mouvement horizontal
     if love.keyboard.isDown("q") then
+
+      self.sprite = self.player_left
+
       self.x = self.x - _speed
 
       -- Si il reste des éléments à gauche de l'écran, on scrolle
@@ -56,6 +85,9 @@ local Player = {
       end
 
     elseif love.keyboard.isDown("d") then
+
+      self.sprite = self.player_right
+
       self.x = self.x + _speed
 
       -- Si il reste des éléments à droite de l'écran, on scrolle
@@ -72,9 +104,12 @@ local Player = {
     love.graphics.push()
 
     love.graphics.setColor(1, 0, 0, 1)
-    love.graphics.print("x:" .. math.floor(self.x) .. " y: " .. math.floor(self.y), self.x, self.y)
-    love.graphics.circle("fill", self.x, self.y, 5, 16)
+    --love.graphics.print("x:" .. math.floor(self.x) .. " y: " .. math.floor(self.y), self.x, self.y)
+    --love.graphics.circle("fill", self.x, self.y, 5, 16)
     love.graphics.circle("line", self.x, self.y, self.fov, 64)
+
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.draw(self.spriteSheet, self.sprite, self.x, self.y, 0, Map.textureRatio, Map.textureRatio, 8, 8)
 
     love.graphics.pop()
   end
