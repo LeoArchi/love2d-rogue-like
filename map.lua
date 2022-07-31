@@ -162,6 +162,83 @@ local Map = {
     Player:draw()
 
     love.graphics.pop()
+  end,
+
+  minimap_draw = function(self, map_center_x, map_center_y, width, height)
+    love.graphics.push()
+
+    love.graphics.setColor(1, 1, 1, 1)
+
+    local cell_x_width = math.floor(width / self.columns)
+    local cell_y_width = math.floor(height / self.rows)
+
+    local scale_x = cell_x_width /16
+    local scale_y = cell_y_width /16
+
+    local new_width  = cell_x_width * self.columns
+    local new_height = cell_y_width * self.rows
+
+    local start_x = map_center_x - new_width /2
+    local start_y = map_center_y - new_height /2
+
+    love.graphics.rectangle("line", start_x, start_y, new_width, new_height)
+
+    for row=1, self.rows do
+      for column=1, self.columns do
+
+        local _x = (column - 1) * cell_x_width + start_x
+        local _y = (row - 1) * cell_y_width + start_y
+
+        mapContent = self.map[row][column]
+
+        -- Fond de la case
+        if mapContent == 0 then
+          love.graphics.draw(world_tiles, water, _x, _y, 0, scale_x, scale_y)
+        elseif mapContent == 1 then
+          love.graphics.draw(world_tiles, grass, _x, _y, 0, scale_x, scale_y)
+        elseif mapContent == 2 then
+          love.graphics.draw(world_tiles, cliff, _x, _y, 0, scale_x, scale_y)
+
+        -- Falaises de face, partie gauche
+        elseif mapContent == 3 then
+          love.graphics.draw(world_tiles, cliff_bottom_left_top, _x, _y, 0, scale_x, scale_y)
+        elseif mapContent == 4 then
+          love.graphics.draw(world_tiles, cliff_bottom_left_bottom, _x, _y, 0, scale_x, scale_y)
+
+        -- Falaises de face, partie droite
+        elseif mapContent == 5 then
+          love.graphics.draw(world_tiles, cliff_bottom_right_top, _x, _y, 0, scale_x, scale_y)
+        elseif mapContent == 6 then
+          love.graphics.draw(world_tiles, cliff_bottom_right_bottom, _x, _y, 0, scale_x, scale_y)
+
+        -- Falaises de dos
+        elseif mapContent == 7 then
+          love.graphics.draw(world_tiles, cliff_top_left, _x, _y, 0, scale_x, scale_y)
+        elseif mapContent == 8 then
+          love.graphics.draw(world_tiles, cliff_top_right, _x, _y, 0, scale_x, scale_y)
+
+
+        elseif mapContent == 9 then
+          love.graphics.draw(world_tiles, sand, _x, _y, 0, scale_x, scale_y)
+        elseif mapContent == 10 then
+          love.graphics.draw(world_tiles, sand_grass, _x, _y, 0, scale_x, scale_y)
+        elseif mapContent == 11 then
+          love.graphics.draw(world_tiles, sand_water, _x, _y, 0, scale_x, scale_y)
+        end
+
+      end
+    end
+
+    local playerX = (Player.x / (self.columns * self.cellSize)) * new_width  + start_x
+    local playerY = (Player.y / (self.rows    * self.cellSize)) * new_height + start_y
+
+    love.graphics.setColor(1, 0, 0, 1)
+    love.graphics.setLineWidth(2)
+    love.graphics.print("Vous êtes ici", playerX - 37, playerY - 27)
+    love.graphics.circle("fill", playerX, playerY, 5, 16)
+    love.graphics.circle("line", playerX, playerY, 10, 16)
+
+    love.graphics.pop()
   end
 
 }

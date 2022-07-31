@@ -27,6 +27,9 @@ function love.load()
   Camera.x = love.graphics.getWidth()/2
   Camera.y = love.graphics.getHeight()/2
 
+  map_Img = love.graphics.newImage("resources/textures/Parchment.png")
+  isMapView = false
+
 end
 
 function love.update(dt)
@@ -60,4 +63,23 @@ function love.draw()
     love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
   end
 
+  if isMapView then
+    love.graphics.setColor(0, 0, 0, 0.8)
+    love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.draw(map_Img, love.graphics.getWidth()/2, love.graphics.getHeight()/2, 0, 3, 3, map_Img:getWidth()/2, map_Img:getHeight()/2)
+    love.graphics.setColor(0, 0, 0, 1)
+    Map:minimap_draw(love.graphics.getWidth()/2, love.graphics.getHeight()/2, 500, 500)
+  end
+
+end
+
+function love.keypressed(key, scancode, isrepeat)
+  if key == "escape" then
+    if isMapView then
+      isMapView = false
+    else
+      isMapView = true
+    end
+  end
 end
