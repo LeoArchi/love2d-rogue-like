@@ -70,13 +70,20 @@ local Map = {
     self.columns = 40
     self.rows = 40
 
-    self.cellSize = 50
+    self.cellSize = 75
 
     self.textureRatio = self.cellSize / 16 -- Les textures font 16px de coté
 
     self.center_x = self.columns * self.cellSize /2
     self.center_y = self.rows * self.cellSize /2
 
+    -- Initialisation des pnjs. En multipliant les coordonnées par la taille d'une case, celà permet d'exprimer ces coordonnées en nb de cases au lieux de nb de pixels
+    pere_fouras = PNJ:new("Père Fouras", 10 * Map.cellSize, 10 * Map.cellSize, "resources/textures/pere_fouras_idle.png")
+
+  end,
+
+  update = function(self, dt)
+    pere_fouras:update(dt)
   end,
 
   draw = function(self)
@@ -133,6 +140,9 @@ local Map = {
 
       end
     end
+
+    -- On dessine les pnj
+    pere_fouras:draw()
 
     -- Avant de quitter le contexte de la carte, on dessine le joueur
     Player:draw()

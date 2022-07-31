@@ -1,8 +1,10 @@
 require "libs/mathUtils"
+AnimationUtils = require "libs/animationUtils"
 
 Map = require "map"
 Player = require "player"
 HudTest = require "hud-test"
+PNJ = require "pnj"
 
 function love.load()
 
@@ -34,7 +36,7 @@ function love.update(dt)
   elseif fadeInChrono >= fadeInDuration and fadeInComplete == false then
     fadeInComplete = true
   end
-
+  Map:update(dt)
   Player:update(dt)
 end
 

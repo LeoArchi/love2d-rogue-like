@@ -1,1 +1,3 @@
-Implémenter une vitesse du joueur en fonction des tuiles (si on change la taille des tuiles, la vitesse du joueur doit suivre)
+- Implémenter une vitesse du joueur en fonction des tuiles (si on change la taille des tuiles, la vitesse du joueur doit suivre)
+- Deplacer dans mail la notion d'échelle (taille d'une case, qui affecte également le joueur et les pnj, ainsi que le facteur d'échelle pour agrandir les pixels)
+
