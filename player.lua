@@ -105,10 +105,10 @@ local Player = {
 
     love.graphics.push()
 
-    love.graphics.setColor(1, 0, 0, 1)
-    --love.graphics.print("x:" .. math.floor(self.x) .. " y: " .. math.floor(self.y), self.x, self.y)
-    --love.graphics.circle("fill", self.x, self.y, 5, 16)
-    love.graphics.circle("line", self.x, self.y, self.fov, 64)
+    if debug then
+      love.graphics.setColor(1, 0, 0, 1)
+      love.graphics.circle("line", self.x, self.y, self.fov, 64)
+    end
 
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.draw(self.spriteSheet, self.sprite, self.x, self.y, 0, Map.textureRatio, Map.textureRatio, 8, 8)

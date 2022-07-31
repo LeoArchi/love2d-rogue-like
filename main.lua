@@ -30,6 +30,9 @@ function love.load()
   map_Img = love.graphics.newImage("resources/textures/Parchment.png")
   isMapView = false
 
+  -- Mode debug, permet pour l'instant de visualiser le bord des tuiles ainsi que le FOV du joueur
+  debug = false
+
 end
 
 function love.update(dt)

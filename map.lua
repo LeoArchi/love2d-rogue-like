@@ -106,9 +106,13 @@ local Map = {
 
         mapContent = self.map[row][column]
 
-        -- Visualiser le champ de vision du joueur
-        if math.getDistance(Player.x, Player.y, _x + self.cellSize/2, _y + self.cellSize/2) <= Player.fov then
-          love.graphics.setColor(1, 0.8, 0.8, 1)
+        if debug then
+          -- Visualiser le champ de vision du joueur
+          if math.getDistance(Player.x, Player.y, _x + self.cellSize/2, _y + self.cellSize/2) <= Player.fov then
+            love.graphics.setColor(1, 0.8, 0.8, 1)
+          else
+            love.graphics.setColor(1, 1, 1, 1)
+          end
         else
           love.graphics.setColor(1, 1, 1, 1)
         end
@@ -148,9 +152,11 @@ local Map = {
           love.graphics.draw(world_tiles, sand_water, _x, _y, 0, self.textureRatio, self.textureRatio)
         end
 
-        -- Le bord de la case
-        love.graphics.setColor(0.15, 0.15, 0.15, 1)
-        love.graphics.rectangle("line", _x, _y, self.cellSize, self.cellSize)
+        if debug then
+          -- Le bord de la case
+          love.graphics.setColor(0.15, 0.15, 0.15, 1)
+          love.graphics.rectangle("line", _x, _y, self.cellSize, self.cellSize)
+        end
 
       end
     end
